@@ -1,0 +1,16 @@
+{
+  "name": "Unwind: Leave Application Management",
+  "short_name": "Unwind </>",
+  "lang": "en-US",
+  "start_url": "Login.html",
+  "display": "standalone",
+  "background_color": "black",
+  "theme_color": "black",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
