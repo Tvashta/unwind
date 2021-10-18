@@ -1,0 +1,145 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Poppins, sasns-serif
+}
+
+.sidebar {
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 78px;
+	background: #11101d;
+	padding: 6px 14px;
+	z-index: 99;
+	transition: all .5s ease
+}
+
+.sidebar .logo-details {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	position: relative
+}
+
+.sidebar .logo-details .icon {
+	opacity: 0;
+	transition: all .5s ease
+}
+
+.sidebar .logo-details .logo_name {
+	color: #fff;
+	font-size: 20px;
+	font-weight: 600;
+	opacity: 0;
+	transition: all .5s ease
+}
+
+.sidebar .logo-details #btn {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+	font-size: 22px;
+	transition: all .4s ease;
+	font-size: 23px;
+	text-align: center;
+	cursor: pointer;
+	transition: all .5s ease
+}
+
+.sidebar i {
+	color: #fff;
+	height: 60px;
+	min-width: 50px;
+	font-size: 28px;
+	text-align: center;
+	line-height: 60px
+}
+
+.sidebar .nav-list {
+	margin-top: 20px;
+	height: 100%;
+	padding: 0 !important;
+}
+
+.sidebar li {
+	position: relative;
+	margin: 8px 0;
+	list-style: none
+}
+
+.sidebar li .tooltip {
+	position: absolute;
+	top: -20px;
+	left: calc(100% + 15px);
+	z-index: 3;
+	background: #fff;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .3);
+	padding: 6px 12px;
+	border-radius: 4px;
+	font-size: 15px;
+	font-weight: 400;
+	opacity: 0;
+	white-space: nowrap;
+	pointer-events: none;
+	transition: 0s
+}
+
+.sidebar li:hover .tooltip {
+	opacity: 1;
+	pointer-events: auto;
+	transition: all .4s ease;
+	top: 50%;
+	transform: translateY(-50%)
+}
+
+.sidebar li a {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	border-radius: 12px;
+	align-items: center;
+	text-decoration: none;
+	transition: all .4s ease;
+	background: #11101d
+}
+
+.sidebar li a:hover {
+	background: #fff
+}
+
+.sidebar li a:hover i {
+	transition: all .5s ease;
+	color: #11101d
+}
+
+.sidebar li i {
+	height: 50px;
+	line-height: 50px;
+	font-size: 18px;
+	border-radius: 12px
+}
+
+@media (max-width:420px) {
+	.sidebar li .tooltip {
+		display: none
+	}
+}
+.cust-btn{
+	height: 25px;
+	width: 20px;
+	font-size: 18px;
+	background-color: white;
+	border: none;
+	color: red;
+}
+
+body {
+	background-color: #000;
+}
+.w-30{
+	width: 30% !important;
+}

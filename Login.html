@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Login</title>
+  <link href="css/main.css" rel='stylesheet' type='text/css'>
+  <link rel="icon" type="image/png" href="assets/unwind.ico" />
+  <script>if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js')
+  }
+  </script>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <meta content="black" name="theme-color"/>
+</head>
+
+<body style="background-image: url('assets/bg-01.jpg');">
+  <div class="brand">
+    <img src="assets/wrdlogo.jpg">
+  </div>
+  <div class="bigbox">
+    <form>
+      <div class="box">
+        <h1>Login</h1>
+
+        <input type="email" name="email" placeholder="Name" class="email" />
+
+        <input type="password" name="email" placeholder="Password" class="email" />
+
+        <a href="employee/company.html">
+          <div class="btn">Sign In</div>
+        </a> <!-- End Btn -->
+
+        <a href="Register.html">
+          <div id="btn2">Register</div>
+        </a> <!-- End Btn2 -->
+        <a href="admin/company.html" class="admin">Login as admin
+        </a>
+      </div> <!-- End Box -->
+
+      <div class="imgbox" style="background-image: url('assets/phone1.jpg');"></div>
+
+    </form>
+  </div>
+
+
+  <p style="color: black;">Your password? <a href="#"><u style="color:#b224ef;">Click Here!</u></a></p>
+</body>

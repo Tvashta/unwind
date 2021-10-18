@@ -1,0 +1,206 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 auto 0 auto;
+  width: 100%;
+  text-align: center;
+  margin: 20px 0px 20px 0px;
+}
+
+body::before{
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255,255,255,0.7);
+}
+
+p {
+  font-size: 12px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+h1 {
+  font-size: 1.5em;
+  color: #525252;
+  margin-top: 70px;
+}
+
+.box {
+  background: white;
+  width: 300px;
+  height: 325px;
+  border-radius: 6px;
+  margin: 0 auto 0 auto;
+  padding: 0px 0px 20px 0px;
+  border-width: 4px;
+  border-style: solid;
+  border-image: 
+  linear-gradient(
+      to bottom, 
+      #b224ef, 
+      #7579ff
+    ) 1 100%;
+}
+
+.imgbox{
+  background: white;
+  width: 330px;
+  height: 350px;
+  border-radius: 6px;
+  background-size: 100% 100%;
+}
+
+.imgbox img{
+  height: 350px;
+  width: 330px;
+  border-radius: 6px;
+}
+
+.bigbox {
+  height: 400px;
+  width: 700px;
+  margin: 100px auto 0 auto;
+  padding: 10px 10px 10px 10px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  background: #9152f8;
+  background: -webkit-linear-gradient(top, #7579ff, #b224ef);
+  background: -o-linear-gradient(top, #7579ff, #b224ef);
+  background: -moz-linear-gradient(top, #7579ff, #b224ef);
+  background: linear-gradient(top, #7579ff, #b224ef);
+}
+
+.bigbox .box {
+  float: left;
+  margin-top: 25px;
+  margin-left: 10px;
+}
+
+.bigbox .imgbox{
+  float:right;
+  margin-top: 25px;
+  margin-right: 10px;
+}
+
+.logo{
+  height: 100px;
+  width: 270px;
+  margin: 75px 10px auto 15px;
+  border-radius: 4px;
+  background-size: 100% 100%;
+}
+
+.email {
+  background: #ecf0f1;
+  border: #7579ff 1px solid;
+  border-bottom: #7579ff 2px solid;
+  padding: 8px;
+  width: 250px;
+  color: #000000;
+  margin-top: 10px;
+  font-size: 1em;
+  border-radius: 4px;
+}
+
+.password {
+  border-radius: 4px;
+  background: #ecf0f1;
+  border: #ccc 1px solid;
+  padding: 8px;
+  width: 250px;
+  font-size: 1em;
+}
+
+.btn {
+  background:white;
+  width: 125px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #555555;
+  border-radius: 4px;
+  border: #b224ef 2px solid;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  float: left;
+  margin-left: 16px;
+  font-weight: 800;
+  font-size: 0.8em;
+  transition: all 0.4s;
+}
+
+.btn:hover {
+  background: #9152f8;
+  background: -webkit-linear-gradient(bottom, #7579ff, #b224ef);
+  background: -o-linear-gradient(bottom, #7579ff, #b224ef);
+  background: -moz-linear-gradient(bottom, #7579ff, #b224ef);
+  background: linear-gradient(bottom, #7579ff, #b224ef);
+  color: white;
+}
+
+#btn2 {
+  float: left;
+  background: white;
+  width: 125px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #555555;
+  border-radius: 4px;
+  border: #b224ef 2px solid;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  font-weight: 800;
+  font-size: 0.8em;
+  transition: all 0.4s;
+}
+
+#btn2:hover {
+  background: #9152f8;
+  background: -webkit-linear-gradient(bottom, #7579ff, #b224ef);
+  background: -o-linear-gradient(bottom, #7579ff, #b224ef);
+  background: -moz-linear-gradient(bottom, #7579ff, #b224ef);
+  background: linear-gradient(bottom, #7579ff, #b224ef);
+  color: white;
+}
+
+.btn3 {
+  background: white;
+  width: 125px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #555555;
+  border-radius: 4px;
+  border: #b224ef 2px solid;
+  margin: 20px auto auto auto;
+  font-weight: 800;
+  font-size: 0.8em;
+  transition: all 0.4s;
+}
+
+.btn3:hover {
+  background: #9152f8;
+  background: -webkit-linear-gradient(bottom, #7579ff, #b224ef);
+  background: -o-linear-gradient(bottom, #7579ff, #b224ef);
+  background: -moz-linear-gradient(bottom, #7579ff, #b224ef);
+  background: linear-gradient(bottom, #7579ff, #b224ef);
+  color: white;
+}
+
+.brand img{
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  border-radius: 4px;
+}
+.admin{
+  color: #b224ef;
+  cursor: pointer;
+  border: 2px solid #9152f8;
+  display: inline;
+  padding: 5px;
+  border-radius: 5px;
+  text-decoration: none;
+}
