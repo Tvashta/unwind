@@ -175,4 +175,16 @@ section{
         line-height: 60px;
     }
 }
-      
+
+.modal-body input{
+    width: 100%;
+    border-radius: 5px;
+    padding: 1%;
+    border: #333 1px solid;
+}
+
+.modal-body label{
+    width: 90%;
+    font-weight: normal;
+    padding: 2%;
+}

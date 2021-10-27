@@ -18,41 +18,56 @@
     <meta content="black" name="theme-color"/>
 </head>
 <body>
+<%
+	response.setHeader("Cache-Control", "no-cache no-store must-revalidate");
+	response.setHeader("Pragma", "no-cache");
+	response.setHeader("Expires","0");
+	if(session.getAttribute("username")==null)
+	response.sendRedirect("../login.jsp");
+%>
 <div class="sidebar">
     <div class="logo-details">
         <i class="bi bi-code-slash"></i>
     </div>
     <ul class="nav-list">
         <li>
-            <a href="company.html">
+            <a href="company.jsp">
                 <i class='bx bxs-detail'></i>
             </a>
             <span class="tooltip">Company details</span>
         </li>
         <li>
-            <a href="applyLeave.html">
+            <a href="applyLeave.jsp">
                 <i class="bi bi-arrow-right-square-fill"></i>
             </a>
             <span class="tooltip">Apply Leave</span>
         </li>
         <li>
-            <a href="approveLeave.html">
+            <a href="approveLeave.jsp">
                 <i class="bi bi-bell-fill"></i>
             </a>
             <span class="tooltip">Approve Leave</span>
         </li>
         <li>
-            <a href="calendar.html">
-                <i class="bi bi-calendar-event-fill mr-2"></i>
+            <a href="calendar.jsp">
+                <i class="bi bi-calendar-event-fill"></i>
             </a>
             <span class="tooltip">View Calendar</span>
         </li>
         <li>
-            <a href="employeeProfile.html">
+            <a href="employeeProfile.jsp">
                 <i class='bx bx-user'></i>
             </a>
             <span class="tooltip">View Profile</span>
         </li>
+        <li class="last">
+		<form action="/unwind/logout">
+		<button class="btn btn-outline-dark" type="submit">
+				<i class="bi bi-box-arrow-right"></i>
+			</button>
+			<span class="tooltip">Logout</span>
+			</form>
+		</li>
     </ul>
 </div>
 <div class="container mt-5">

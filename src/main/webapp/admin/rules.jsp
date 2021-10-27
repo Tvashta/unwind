@@ -20,47 +20,62 @@
     <link rel="manifest" href="../manifest.json"/>
 </head>
 <body>
+<%
+	response.setHeader("Cache-Control", "no-cache no-store must-revalidate");
+	response.setHeader("Pragma", "no-cache");
+	response.setHeader("Expires","0");
+	if(session.getAttribute("username")==null)
+	response.sendRedirect("../login.jsp");
+%>
 <div class="sidebar">
     <div class="logo-details">
         <i class="bi bi-code-slash"></i>
     </div>
     <ul class="nav-list">
         <li>
-            <a href="company.html">
+            <a href="company.jsp">
                 <i class='bx bxs-detail'></i>
             </a>
             <span class="tooltip">Company details</span>
         </li>
         <li>
-            <a href="addRoles.html">
+            <a href="addRoles.jsp">
                 <i class='bi bi-node-plus-fill'></i>
             </a>
             <span class="tooltip">Add Roles</span>
         </li>
         <li>
-            <a href="assignRoles.html">
+            <a href="assignRoles.jsp">
                 <i class='bx bx-award'></i>
             </a>
             <span class="tooltip">Assign Roles</span>
         </li>
         <li>
-            <a href="calendar.html">
+            <a href="calendar.jsp">
                 <i class="bi bi-calendar-event-fill"></i>
             </a>
             <span class="tooltip">View Calendar</span>
         </li>
         <li>
-            <a href="rules.html">
+            <a href="rules.jsp">
                 <i class="bi bi-card-list"></i>
             </a>
             <span class="tooltip">Set rules</span>
         </li>
         <li>
-            <a href="profile.html">
+            <a href="profile.jsp">
                 <i class='bx bx-user'></i>
             </a>
             <span class="tooltip">View Profile</span>
         </li>
+        <li class="last">
+		<form action="/unwind/logout">
+		<button class="btn btn-outline-dark" type="submit">
+				<i class="bi bi-box-arrow-right"></i>
+			</button>
+			<span class="tooltip">Logout</span>
+			</form>
+		</li>
     </ul>
 </div>
 <div class="page-wrapper">

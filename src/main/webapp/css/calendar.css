@@ -70,11 +70,11 @@ tr:nth-child(even) > .calendar__day__cell:nth-child(even) {
 }
 .calendar__day__cell[data-event] {
     background-color: #e66053;
-    color: #4e4f4a;
+    color: #4e4f4a !important;
 }
 .calendar__day__cell[data-event]:after {
     content: attr(data-event);
-    color: #f6e9dc;
+    color: #f6e9dc !important;
     display: block;
     font-weight: 400;
     font-size: 0.75rem;
@@ -88,11 +88,11 @@ tr:nth-child(even) > .calendar__day__cell:nth-child(even) {
     background-color: #4e4f4a;
     border-color: #4e4f4a;
     border-bottom: none;
-    color: #f6e9dc;
+    color: #f6e9dc !important;
 }
 .calendar__day__cell[data-opt]:after {
     content: attr(data-opt);
-    color: #f6e9dc;
+    color: #f6e9dc !important;
     display: block;
     font-size: 0.75rem;
     font-weight: 400;

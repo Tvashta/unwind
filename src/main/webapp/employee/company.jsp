@@ -1,8 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unwind </></title>
     <link rel="stylesheet" href="../css/sb.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <link rel="icon" type="image/png" href="../assets/unwind.ico" />
     <script>if('serviceWorker' in navigator){
-        navigator.serviceWorker.register('../sw.js')
+        navigator.serviceWorker.register('sw.js')
     }
     </script>
     <link rel="manifest" href="../manifest.json"/>
@@ -21,49 +22,56 @@
     <meta content="black" name="theme-color"/>
 </head>
 <body>
+<%
+	response.setHeader("Cache-Control", "no-cache no-store must-revalidate");
+	response.setHeader("Pragma", "no-cache");
+	response.setHeader("Expires","0");
+	if(session.getAttribute("username")==null)
+	response.sendRedirect("../login.jsp");
+%>
 <div class="sidebar">
     <div class="logo-details">
         <i class="bi bi-code-slash"></i>
     </div>
     <ul class="nav-list">
         <li>
-            <a href="company.html">
+            <a href="company.jsp">
                 <i class='bx bxs-detail'></i>
             </a>
             <span class="tooltip">Company details</span>
         </li>
         <li>
-            <a href="addRoles.html">
-                <i class='bi bi-node-plus-fill'></i>
+            <a href="applyLeave.jsp">
+                <i class="bi bi-arrow-right-square-fill"></i>
             </a>
-            <span class="tooltip">Add Roles</span>
+            <span class="tooltip">Apply Leave</span>
         </li>
         <li>
-            <a href="assignRoles.html">
-                <i class='bx bx-award'></i>
+            <a href="approveLeave.jsp">
+                <i class="bi bi-bell-fill"></i>
             </a>
-            <span class="tooltip">Assign Roles</span>
+            <span class="tooltip">Approve Leave</span>
         </li>
         <li>
-            <a href="calendar.html">
+            <a href="calendar.jsp">
                 <i class="bi bi-calendar-event-fill"></i>
             </a>
             <span class="tooltip">View Calendar</span>
         </li>
         <li>
-            <a href="rules.html">
-                <i class="bi bi-card-list"></i>
-            </a>
-            <span class="tooltip">Set rules</span>
-        </li>
-        <li>
-            <a href="profile.html">
+            <a href="employeeProfile.jsp">
                 <i class='bx bx-user'></i>
             </a>
             <span class="tooltip">View Profile</span>
         </li>
-
-
+        <li class="last">
+		<form action="/unwind/logout">
+		<button class="btn btn-outline-dark" type="submit">
+				<i class="bi bi-box-arrow-right"></i>
+			</button>
+			<span class="tooltip">Logout</span>
+			</form>
+		</li>
     </ul>
 </div>
 <div class="container-landing">
