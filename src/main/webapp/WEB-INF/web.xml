@@ -48,4 +48,44 @@
     <servlet-name>ApplyLeave</servlet-name>
     <url-pattern>/applyLeave</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddRole</display-name>
+    <servlet-name>AddRole</servlet-name>
+    <servlet-class>com.unwind.AddRole</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddRole</servlet-name>
+    <url-pattern>/addRole</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ApproveLeave</display-name>
+    <servlet-name>ApproveLeave</servlet-name>
+    <servlet-class>com.unwind.ApproveLeave</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApproveLeave</servlet-name>
+    <url-pattern>/approveLeave</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Employee</display-name>
+    <servlet-name>Employee</servlet-name>
+    <servlet-class>com.unwind.Employee</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Employee</servlet-name>
+    <url-pattern>/employee</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Rules</display-name>
+    <servlet-name>Rules</servlet-name>
+    <servlet-class>com.unwind.Rules</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Rules</servlet-name>
+    <url-pattern>/rules</url-pattern>
+  </servlet-mapping>
 </web-app>

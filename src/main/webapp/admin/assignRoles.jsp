@@ -13,10 +13,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="../assets/unwind.ico" />
-    <script>if('serviceWorker' in navigator){
-        navigator.serviceWorker.register('sw.js')
-    }
-    </script>
     <link rel="manifest" href="../manifest.json"/>
 
 </head>
@@ -112,62 +108,14 @@
                                 <th scope="col">Emp ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Role</th>
+                                <th scope="col">Reports to</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>
                                 <th scope="col"><i class="bi bi-pencil-fill"></i></th>
                             </tr>
                             </thead>
                             <tbody id="table-body">
-                            <tr data-eid="EMP01ABC" data-name="Lelouch vi Brittania" data-role="CEO">
-                                <td>EMP01ABC</td>
-                                <td>Lelouch vi Brittania</td>
-                                <td>CEO</td>
-                                <td style="width: 12%">
-                                    <button type="button" class="btn btn-outline-info btn-edit"><i
-                                            class="bi bi-pencil-fill"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-delete"><i
-                                            class="bi bi-trash-fill"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-eid="EMP11XXW" data-name="Ruby Rose" data-role="Head of HR">
-                                <td>EMP11XXW</td>
-                                <td>Ruby Rose</td>
-                                <td>Head of HR</td>
-                                <td style="width: 12%">
-                                    <button type="button" class="btn btn-outline-info btn-edit"><i
-                                            class="bi bi-pencil-fill"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-delete"><i
-                                            class="bi bi-trash-fill"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-eid="EMP91BAW" data-name="Bruce Wayne" data-role="CFO">
-                                <td>EMP91BAW</td>
-                                <td>Bruce Wayne</td>
-                                <td>CFO</td>
-                                <td style="width: 12%">
-                                    <button type="button" class="btn btn-outline-info btn-edit"><i
-                                            class="bi bi-pencil-fill"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-delete"><i
-                                            class="bi bi-trash-fill"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-eid="EMP00AAA" data-name="Gandalf the Gray" data-role="Chairman">
-                                <td>EMP00AAA</td>
-                                <td>Gandalf the Gray</td>
-                                <td>Board Chairman</td>
-                                <td style="width: 12%">
-                                    <button type="button" class="btn btn-outline-info btn-edit"><i
-                                            class="bi bi-pencil-fill"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-delete"><i
-                                            class="bi bi-trash-fill"></i>
-                                    </button>
-                                </td>
-                            </tr>
+       
                             </tbody>
                         </table>
 
@@ -175,6 +123,7 @@
                 </div>
                 <button class="btn btn-outline-dark float-right mt-4" data-toggle="modal" data-target="#addEmployee"><i
                         class="bi bi-person-plus-fill"></i></button>
+                <button class="btn btn-success float-left mt-4" onclick="saveChanges()">Save Changes</button>
                 <div class="modal fade" id="addEmployee" tabindex="-1" aria-labelledby="addEmployeeLabel"
                      aria-hidden="true">
                     <div class="modal-dialog">
@@ -187,14 +136,13 @@
                             </div>
                             <div class="modal-body">
                                 <input type="text" id="name" class="form-control mb-2" placeholder="Name">
-                                <input type="text" id="id" class="form-control mb-2" placeholder="Employee ID">
+                                <input type="number" id="id" class="form-control mb-2" placeholder="Employee ID">
                                 <select class="custom-select" id="role">
-                                    <option value="Officer" selected>Officer</option>
-                                    <option value="CEO">CEO</option>
-                                    <option value="CFO">CFO</option>
-                                    <option value="Tech Lead">Tech Lead</option>
-                                    <option value="Chairman">Board Chairman</option>
+                                    <option value="None" selected>Select Role</option>
                                 </select>
+                                <input type="number" id="reports" class="form-control mb-2" placeholder="Reports to">
+                                <input type="email" id="email" class="form-control mb-2" placeholder="Email">
+                                <input type="number" id="phno" class="form-control mb-2" placeholder="Phone Number">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -207,65 +155,103 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
 <script>
-    function addEmployee() {
-        let eid = $('#id').val(),
-            name = $('#name').val(),
-            role = $('#role').val()
-        $("#table-body").append('<tr data-eid =' + eid + ' data-name=' + name + ' data-role=' + role + ' >' +
+	let employees=[], roles=<%=com.unwind.Utilities.getRoles(session.getAttribute("username").toString())%>
+	roles.map(role=>{
+		$("#role").append('<option '+'id=opt-'+role+ ' value='+role+' class="form-control">'+role+'</option>')
+	})
+	
+	$.get("/unwind/employee", function(data) {
+	    $(data).find("employee").each(function(){
+	    	let emp={
+		    		id: $(this).find("id").text(),
+		    		name:$(this).find("name").text(),
+		    		role:$(this).find("role").text(),
+		    		reports: $(this).find("reports").text(),
+		    		email: $(this).find("email").text(),
+		    		phno: $(this).find("phno").text()
+		    	}
+	        console.log(employees)
+	        addEmployee(emp.id, emp.name,emp.role, emp.reports, emp.email, emp.phno)
+	    });
+	});
+    function addEmployee(eid=$('#id').val(), name=$('#name').val(), role=$('#role').val(), reports=$('#reports').val(),email=$('#email').val(),phno=$('#phno').val()) {
+        $("#table-body").append('<tr data-eid =' + eid + ' data-name=' + name + ' data-role=' + role +' data-reports='+reports +' data-email='+email +' data-phno='+phno +' >' +
             '<td>' + eid + '</td>' +
             '<td>' + name + '</td>' +
             ' <td>' + role + '</td>' +
+            ' <td>' + reports + '</td>' +
+            ' <td>' + email + '</td>' +
+            ' <td>' + phno + '</td>' +
             '<td style="width: 12%">' +
             ' <button type="button" class="btn btn-outline-info btn-edit"><i class="bi bi-pencil-fill"></i></button>' +
             '<button type="button" class="btn btn-danger btn-delete"><i class="bi bi-trash-fill"></i></button>' +
             '</td>' +
             '</tr>')
+        employees=[...employees, {id:eid,name,role,reports,email,phno}]
         $('#addEmployee').modal('hide')
     }
 
     $("body").on("click", ".btn-delete", function () {
-        $(this).parents("tr").remove();
+    	const eid = $(this).parents("tr").attr("data-eid")
+    	employees=employees.filter(x=> x.id!=eid)
+    	$(this).parents("tr").remove();
+        
     }).on("click", ".btn-edit", function () {
         console.log($(this))
         const eid = $(this).parents("tr").attr("data-eid")
         const name = $(this).parents("tr").attr("data-name")
         const role = $(this).parents("tr").attr("data-role")
-        console.log(name, eid, role)
+        const reports = $(this).parents("tr").attr("data-reports")
+        const email = $(this).parents("tr").attr("data-email")
+        const phno = $(this).parents("tr").attr("data-phno")
+        
 
         $(this).parents("tr").find("td:eq(0)").html('<input class="form-control mb-2" name="edit_eid" value="' + eid + '">')
         $(this).parents("tr").find("td:eq(1)").html('<input class="form-control mb-2" name="edit_name" value="' + name + '">')
-        $(this).parents("tr").find("td:eq(2)").html(' <select class="custom-select" id="edit_role">' +
-            '<option value="Officer">Officer</option>' +
-            '<option value="CEO">CEO</option>' +
-            '<option value="CFO">CFO</option>' +
-            '<option value="Tech Lead">Tech Lead</option>' +
-            ' <option value="Chairman">Board Chairman</option>' +
-            '</select>')
+        let html=' <select class="custom-select" id="edit_role">'
+        roles.map(role=>{
+        	html+='<option value='+role+'>'+role+'</option>'
+        })
+        html+='</select>'
+        $(this).parents("tr").find("td:eq(2)").html(html)
+            $(this).parents("tr").find("td:eq(3)").html('<input class="form-control mb-2" name="edit_reports" type="number" value="' + reports + '">')
+            $(this).parents("tr").find("td:eq(4)").html('<input class="form-control mb-2" name="edit_email" type="email" value="' + email + '">')
+           $(this).parents("tr").find("td:eq(5)").html('<input class="form-control mb-2" name="edit_phno" type="number" value="' + phno + '">')
         $('#edit_role option:selected').attr("selected", null)
         $('#edit_role option[value =' + role + ' ]').attr("selected", "selected");
-        $(this).parents("tr").find("td:eq(3)").prepend("<div class='save-cancel'><button class=\"btn btn-outline-success btn-save mr-2\"'><i class=\"bi bi-check-lg\"></i></button><button class=\"btn btn-danger btn-cancel\"><i class=\"bi bi-x-lg\"></i></button></div>")
+        $(this).parents("tr").find("td:eq(6)").prepend("<div class='save-cancel'><button class=\"btn btn-outline-success btn-save mr-2\"'><i class=\"bi bi-check-lg\"></i></button><button class=\"btn btn-danger btn-cancel\"><i class=\"bi bi-x-lg\"></i></button></div>")
         $(this).hide();
-        $(this).parents("tr").find("td:eq(3)").find(".btn-delete").hide()
+        $(this).parents("tr").find("td:eq(6)").find(".btn-delete").hide()
     }).on("click", ".btn-save", function () {
         const eid = $($(this).parents("tr").find("td:eq(0)").find("input")).val()
         const name = $($(this).parents("tr").find("td:eq(1)").find("input")).val()
         const role = $($(this).parents("tr").find("td:eq(2)").find("select option:selected")).val()
-
+ 		const reports = $($(this).parents("tr").find("td:eq(3)").find("input")).val()
+ 		const email = $($(this).parents("tr").find("td:eq(4)").find("input")).val()
+ 		const phno = $($(this).parents("tr").find("td:eq(5)").find("input")).val()
+ 		
+ 		employees=employees.filter(x=> x.id!=$(this).parents("tr").attr("data-eid"))
+ 		employees=[...employees, {id:eid,name,role,reports,email,phno}]
+ 		
         $(this).parents("tr").find("td:eq(0)").text(eid);
         $(this).parents("tr").find("td:eq(1)").text(name);
         $(this).parents("tr").find("td:eq(2)").text(role);
-
+        $(this).parents("tr").find("td:eq(3)").text(reports);
+        $(this).parents("tr").find("td:eq(4)").text(email);
+        $(this).parents("tr").find("td:eq(5)").text(phno);
+        
         $(this).parents("tr").attr('data-name', name);
         $(this).parents("tr").attr('data-eid', eid);
         $(this).parents("tr").attr('data-role', role);
-
+        $(this).parents("tr").attr('data-reports', reports);
+        $(this).parents("tr").attr('data-email', email);
+        $(this).parents("tr").attr('data-phno', phno);
+        
         $(this).parents("tr").find(".btn-edit").show();
         $(this).parents("tr").find(".btn-delete").show();
         $(this).parents("tr").find("div.save-cancel").remove();
@@ -273,15 +259,34 @@
         const eid = $(this).parents("tr").attr("data-eid")
         const name = $(this).parents("tr").attr("data-name")
         const role = $(this).parents("tr").attr("data-role")
-
-        $(this).parents("tr").find("td:eq(0)").text(eid);
+		const reports = $(this).parents("tr").attr("data-reports")
+		const email = $(this).parents("tr").attr("data-email")
+		const phno = $(this).parents("tr").attr("data-phno")
+        
+		$(this).parents("tr").find("td:eq(0)").text(eid);
         $(this).parents("tr").find("td:eq(1)").text(name);
         $(this).parents("tr").find("td:eq(2)").text(role);
-
+        $(this).parents("tr").find("td:eq(3)").text(reports);
+        $(this).parents("tr").find("td:eq(4)").text(email);
+        $(this).parents("tr").find("td:eq(5)").text(phno);
+        
         $(this).parents("tr").find(".btn-edit").show();
         $(this).parents("tr").find(".btn-delete").show();
         $(this).parents("tr").find("div.save-cancel").remove();
     })
+    
+    function saveChanges(){	
+    	console.log(JSON.stringify(employees))
+    	$.ajax({
+		    url: '/unwind/employee',
+		    dataType: 'json',
+		    data: {
+		    	employees:JSON.stringify(employees)
+		    },
+		    type: 'POST'
+		    });
+    	window.location.assign('/unwind/admin/company.jsp')
+    }
 </script>
 </body>
 </html>
