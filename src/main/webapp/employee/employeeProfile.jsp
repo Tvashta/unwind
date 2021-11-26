@@ -136,25 +136,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card text-white bg-dark">
-                    <div class="card-body">
-                        <h5 class="d-flex align-items-center mb-3">Leaves</h5>
-                        <p>Total Days</p>
-                        <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 100%"
-                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p>Full Day Leaves</p>
-                        <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 5%" aria-valuenow="5"
-                                 aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p>Half Day Leaves</p>
-                        <div class="progress mb-3" style="height: 5px">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 10%"
-                                 aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-
-
+                    <div class="card-body" class="h-50 w-50">
+  						<canvas id="myChart" width="400" height="400"></canvas>
                     </div>
                 </div>
             </div>
@@ -163,7 +146,35 @@
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
+let totalLeaves=<%=com.unwind.Utilities.totalLeaves(session.getAttribute("username").toString())%>
+const ctx = document.getElementById('myChart');
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+    	labels: [
+    	    'Leave Taken',
+    	    'Leave Left'
+    	  ],
+    	  datasets: [{
+    	    label: 'My First Dataset',
+    	    data: [totalLeaves, 20-totalLeaves],
+    	    backgroundColor: [
+    	      'rgb(255, 99, 132)',
+    	      'rgb(54, 162, 235)',
+    	    ],
+    	    hoverOffset: 1
+    	  }]
+    },
+    
+    	options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    
+});
 	let prof = <%= com.unwind.Utilities.profile(1, session.getAttribute("username").toString()) %>
 	$("#name").text(prof.name)
 	$("#role").text(prof.role)

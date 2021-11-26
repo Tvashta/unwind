@@ -98,15 +98,8 @@
                         <h4 class="card-title">Company Details</h4>
                     </div>
                     <div class="card-body">
-                        <form onsubmit="return false" method="POST">
+                        <form onsubmit="return false">
                             <div class="container">
-                                <div class="form-group row">
-                                    <label class="col-form-label col-md-2">No. of Employees</label>
-                                    <div class="col-md-10">
-                                        <input name="noe" id="noe" type="text" class="form-control">
-                                    </div>
-                                </div>
-
                                 <div class="form-group row">
                                     <label class="col-form-label col-md-2">Add role</label>
                                     <div class="col-md-10">
@@ -123,15 +116,40 @@
                                         </div>
                                     </div>
                                 </div>
+                                <table class="text-center table">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            Role
+                                        </th>
+                                        <th>
+                                            Reports to
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="role-report">
+                                    </tbody>
+                                </table>
 
                                 <div class="form-group row">
-                                    <label class="col-form-label col-md-2">Verify Password</label>
-                                    <div class="col-md-10">
-                                        <input name="password" id="password" type="text" class="form-control">
+                                    <label class="col-form-label col-md-2">Role</label>
+                                    <div class="col-md-2">
+                                        <select class="form-control" id="role">
+                                            <option class="form-control" value="None">Select Role</option>
+                                        </select>
                                     </div>
+                                    <label class="col-form-label col-md-2">Reports to</label>
+                                    <div class="col-md-2">
+                                        <select class="form-control" id="reports">
+                                            <option class="form-control" value="None">Select Reporting Role</option>
+                                        </select>
+                                    </div>
+                                    <button onclick="addReports()" class="btn btn-primary"
+                                            style="margin-left: 20px;"><i class="bi bi-plus-lg"></i>
+                                    </button>
                                 </div>
                                 <div class="input-group-append">
-                                    <button onclick="clickfn()" class="btn btn-primary">Submit</button>
+                                    <button id="submit-btn" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -146,25 +164,61 @@
 
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     let textbox = document.getElementById('addrole')
     let area = document.querySelector('.enter-text')
-
+    var roleReports={}, roles=<%=com.unwind.Utilities.getRoles(session.getAttribute("username").toString())%>
+    let roleR = <%=com.unwind.Utilities.getRoleReports(session.getAttribute("username").toString())%>
+    roleR.map(r=>{
+    	roleReports={...roleReports, [r[0]]:r[1]}
+            $("#role-report").append('<tr id='+r[0]+r[1]+'><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>')
+    })
+    roles.map(role=>{
+    	area.innerHTML += "<div id='" + role + "'style='display: flex;'><p>" + role + "</p><button onclick=removeRole('" + role + "') class='cust-btn' style='margin-left: 20px;'><i class=\"bi bi-trash-fill\"></i></button></div>"
+        $("#reports").append('<option '+'id=opt-'+role+ ' value='+role+' class="form-control">'+role+'</option>')
+        $("#role").append('<option '+'id=opt-r-'+role+' value='+role+ ' class="form-control">'+role+'</option>')
+    })
     function addRole() {
         area.innerHTML += "<div id='" + textbox.value + "'style='display: flex;'><p>" + textbox.value + "</p><button onclick=removeRole('" + textbox.value + "') class='cust-btn' style='margin-left: 20px;'><i class=\"bi bi-trash-fill\"></i></button></div>"
+        $("#reports").append('<option '+'id=opt-'+textbox.value+ ' value='+textbox.value+' class="form-control">'+textbox.value+'</option>')
+        $("#role").append('<option '+'id=opt-r-'+textbox.value+' value='+textbox.value+ ' class="form-control">'+textbox.value+'</option>')
+        roles.push(textbox.value)
         textbox.value = ""
     }
 
     function removeRole(id) {
-        let str = "" + id
-        console.log(str)
-        let text = document.getElementById(str)
-        text.style.visibility = "collapse"
-        text.style.position = "absolute"
+        $("#"+id).remove()
+        $('#opt-'+id).remove()
+        $('#opt-r-'+id).remove()
+		roles=roles.filter(i=>i!=id)        
     }
 
+  
+    function addReports(){
+        let role=$('#role').val(),
+            reports=$('#reports').val()
+        roleReports={...roleReports, [role]:reports}
+        if($('#'+role+reports).length===0 && role!==reports && role!=='None')
+        $("#role-report").append('<tr id='+role+reports+'><td>'+role+'</td><td>'+reports+'</td></tr>')
+    }
 
+    $('#submit-btn').on('click',(e)=>{
+    	e.preventDefault();
+    	console.log(roles, roleReports)
+    	 $.ajax({
+		    url: '/unwind/addRole',
+		    dataType: 'json',
+		    data: {
+		        roles,
+		        roleReports:JSON.stringify(roleReports)
+		    },
+		    type: 'POST'
+		    });
+    	window.location.assign('/unwind/admin/company.jsp')
+    	
+    })
+    
 </script>
 </body>
 </html>

@@ -13,10 +13,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="../assets/unwind.ico" />
-    <script>if('serviceWorker' in navigator){
-        navigator.serviceWorker.register('sw.js')
-    }
-    </script>
     <link rel="manifest" href="../manifest.json"/>
 </head>
 <body>
@@ -102,34 +98,23 @@
                     <div class="card-body">
                         <ul class="list-group list-group-horizontal mb-2 list-group-flush">
                             <li class="list-group-item w-30 d-inline-block mr-3 "><strong>Role</strong></li>
-                            <li class="list-group-item w-30 d-inline-block mr-3 border-top-0"><strong>Leave Constraint</strong></li>
+                            <li class="list-group-item w-30 d-inline-block mr-3 border-top-0"><strong>Leave From [In days]</strong></li>
+                             <li class="list-group-item w-30 d-inline-block mr-3 border-top-0"><strong>Leave To [In days]</strong></li>
                             <li class="list-group-item w-30 d-inline-block border-top-0"><strong>Reports to</strong></li>
                         </ul>
                         <div id="rules">
-                            <ul class="list-group list-group-horizontal mb-1 list-group-flush ">
-                                <li class="list-group-item w-30 d-inline-block mr-3 border-0">Officer</li>
-                                <li class="list-group-item w-30 d-inline-block mr-3 border-0 "> > 15 days</li>
-                                <li class="list-group-item w-30 d-inline-block border-0">HR</li>
-                            </ul>
-                            <ul class="list-group list-group-horizontal mb-1 list-group-flush ">
-                                <li class="list-group-item w-30 d-inline-block mr-3 border-0">Officer</li>
-                                <li class="list-group-item w-30 d-inline-block mr-3 border-0 ">2-15 days</li>
-                                <li class="list-group-item w-30 d-inline-block border-0">Manager</li>
-                            </ul>
-                            <ul class="list-group list-group-horizontal mb-1 list-group-flush ">
-                                <li class="list-group-item w-30 d-inline-block mr-3 border-0">Officer</li>
-                                <li class="list-group-item w-30 d-inline-block mr-3 border-0 ">1 day</li>
-                                <li class="list-group-item w-30 d-inline-block border-0">Team Leader</li>
-                            </ul>
-                            <ul class="list-group list-group-horizontal mb-1 list-group-flush ">
-                                <li class="list-group-item w-30 d-inline-block mr-3 border-0">Officer</li>
-                                <li class="list-group-item w-30 d-inline-block mr-3 border-0 ">1/2 day</li>
-                                <li class="list-group-item w-30 d-inline-block border-0">Automated</li>
-                            </ul>
+                         
                         </div>
-                        <input type="text" name="from-role" placeholder="Role" class="form-control w-30 mr-3 d-inline-block"/>
-                        <input type="text" name="constraint" placeholder="Constraint" class="form-control mr-3 w-30 d-inline-block"/>
-                        <input type="text" name="to-role" placeholder="Reports to" class="form-control w-30 d-inline-block"/>
+                        
+                        <select class="custom-select form-control w-25 mr-2 d-inline-block" id="from-role" name="from-role" >
+                                    
+                         </select>
+                        
+                        <input type="number" value="0" name="from-leave" placeholder="Leave From" class="form-control mr-4 w-20 d-inline-block"/>
+                         <input type="number" value="0" name="to-leave" placeholder="Leave To" class="form-control mr-2 w-20 d-inline-block"/>
+                        <select class="custom-select form-control w-25 d-inline-block" id="to-role" name="to-role" >         
+                         <option value="Automatic">Automatic</option>
+                         </select>
                         <button class="btn btn-outline-dark float-right d-inline-block" onclick="addRule()"><i
                                 class="bi bi-person-plus-fill"></i></button>
                     </div>
@@ -138,22 +123,45 @@
         </div>
     </div>
 </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-                crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
                 crossorigin="anonymous"></script>
         <script>
-        function addRule(){
+        let roles=<%=com.unwind.Utilities.getRoles(session.getAttribute("username").toString())%>
+        let rules=<%=com.unwind.Utilities.getRules(session.getAttribute("username").toString())%>
+        roles.map(role=>{
+        	$('#from-role').append('<option class="form-control w-25 mr-2 d-inline-block" value ='+role+'>'+role+'</option>')
+        	$('#to-role').append('<option class="form-control w-25 mr-2 d-inline-block" value ='+role+'>'+role+'</option>')
+        })
+        rules.map(rule=>{
+        	addRule(rule[0],rule[1],rule[2],rule[3],false)
+        })
+        
+        function addRule(fromRole=$("select[name=from-role]").val(), fromLeave=$("input[name=from-leave]").val(), toLeave=$("input[name=to-leave]").val(),toRole=$("select[name=to-role]").val(), post=true){
             $("#rules").append('<ul class="list-group list-group-horizontal mb-1 list-group-flush ">' +
-                '<li class="list-group-item w-30 d-inline-block mr-3 border-0">'+$("input[name=from-role]").val()+'</li>' +
-                '<li class="list-group-item w-30 d-inline-block mr-3 border-0 ">'+$("input[name=constraint]").val()+'</li>' +
-                '<li class="list-group-item w-30 d-inline-block border-0">'+$("input[name=to-role]").val()+'</li>' +
+                '<li class="list-group-item w-25 d-inline-block mr-3 border-0">'+fromRole+'</li>' +
+                '<li class="list-group-item w-25 d-inline-block mr-3 border-0 ">'+fromLeave+'</li>' +
+                '<li class="list-group-item w-25 d-inline-block mr-3 border-0 ">'+toLeave+'</li>' +
+                '<li class="list-group-item w-25 d-inline-block border-0">'+toRole+'</li>' +
                 '</ul>')
            $("input[name=from-role]").val("")
-            $("input[name=constraint]").val("")
+            $("input[name=from-leave]").val("")
             $("input[name=to-role]").val("")
+            $("input[name=to-leave]").val("")
+         	if(post){
+         		$.ajax({
+        		    url: '/unwind/rules',
+        		    dataType: 'json',
+        		    data: {
+        		    	fromRole,
+        		    	toRole,
+        		    	from:fromLeave,
+        		    	to:toLeave
+        		    },
+        		    type: 'POST'
+        		    });
+         	}   
         }
         </script>
 </body>
